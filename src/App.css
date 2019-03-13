@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin: 0px 7%;
 }
 
 .App-logo {
@@ -30,4 +31,51 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.nav-link {
+  cursor: pointer;
+}
+.tab-content {
+  padding: 2rem 0;
+}
+.card-img {
+  width: 45px !important;
+  filter: grayscale(80%);
+  margin-top: 4px;
+}
+.card-body .btn-secondary {
+  width: 200px;
+}
+.card {
+  display: inline-block !important
+}
+.user-card {
+  border: 1px solid #c6c7c8;
+  margin: 1em;
+  height: 55px;
+}
+.user-card:hover {
+  box-shadow: 0px 0px 33px 9px rgba(0,0,0,0.33);
+}
+.user-card .user-name {
+  padding-top: 14px;
+}
+.user-card .user-button {
+  margin-top: 7px;
+}
+.user-button {
+  text-align: right
+}
+.header .btn-danger {
+  margin-left: 15px
+}
+.loaing div {
+  margin: auto;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+}
+.user-button .btn-secondary{
+  width: 140px;
 }
