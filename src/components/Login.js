@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
-import { Col, Row, Button, CardImg } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import ReactLoading from 'react-loading';
-import Female from '../asset/images/female.png';
-import Male from '../asset/images/male.png';
-import Man from '../asset/images/man.png';
-import Admin from '../asset/images/admin.png';
 import UserCard from './userCard';
+import { connect } from 'react-redux';
+import { fetchUsers } from '../redux/actions/index';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+class Login extends Component {
+  state = {
+    loading: false
+  };
 
-export default class Login extends Component {
+  componentDidMount() {
+    this.setState({ loading: true });
+    this.props.getAllUsers().then(res => {
+      this.setState({ loading: false });
+    });
+  }
+
   render() {
-    const { userHandler, loading } = this.props;
-
-    const users = [
-      { fullName: 'Admin User', name: 'Admin' },
-      { fullName: 'Tyler McGinnis', name: 'Tyler' },
-      { fullName: 'Ranny Kaddoura', name: 'Ranny' },
-      { fullName: 'Stupid User', name: 'User' }
-    ];
-
-    const profilePhoto = [Admin, Female, Male, Man];
+    const { userHandler, allUsers } = this.props;
+    const { loading } = this.state;
 
     if (loading) {
       return (
@@ -33,22 +32,35 @@ export default class Login extends Component {
     return (
       <Row>
         <Col className="mb-3 mt-5" sm={{ size: 12 }}>
-          <h1>Please Login</h1>
+          <h1>Who Are You !! Please <strong>Login</strong></h1>
         </Col>
-        {users.map((user, idx) => (
-          <Col
-            key={idx}
-            sm={{ size: 6, order: 2, offset: 3 }}
-            className="user-card">
-            <UserCard
-              user={user}
-              userHandler={userHandler}
-              idx={idx}
-              profilePhoto={profilePhoto}
-            />
-          </Col>
-        ))}
+        {allUsers.length > 0 &&
+          allUsers.map(user => (
+            <Col
+              key={user.id}
+              sm={{ size: 6, order: 2, offset: 3 }}
+              className="user-card">
+              <UserCard user={user} userHandler={userHandler} />
+            </Col>
+          ))}
       </Row>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    allUsers: state.allUsers
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getAllUsers: () => dispatch(fetchUsers())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);

@@ -2,9 +2,11 @@
     --dark-red: #460303;
     --black : #000;
     --light-gray: #d8d8d8;
+    --very-light-gray: #f8f8f8;
     --normal-gray: #9e9c9c;
     --dark-gray: #413f3f;
     --white : #fff;
+    --gold : #f3fa3d;
 }
 
 body {

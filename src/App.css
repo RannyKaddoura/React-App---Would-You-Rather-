@@ -48,15 +48,15 @@
   width: 200px;
 }
 .card {
-  display: inline-block !important
+  display: inline-block !important;
 }
 .user-card {
-  border: 1px solid #c6c7c8;
+  border: 1px solid var(--light-gray);
   margin: 1em;
   height: 55px;
 }
 .user-card:hover {
-  box-shadow: 0px 0px 33px 9px rgba(0,0,0,0.33);
+  box-shadow: 0px 0px 33px 9px var(--light-gray);
 }
 .user-card .user-name {
   padding-top: 14px;
@@ -65,17 +65,85 @@
   margin-top: 7px;
 }
 .user-button {
-  text-align: right
+  text-align: right;
 }
 .header .btn-danger {
-  margin-left: 15px
+  margin-left: 15px;
+}
+.loaing {
+  padding-top: 150px
 }
 .loaing div {
   margin: auto;
   position: absolute;
-  top: 40%;
-  left: 50%;
+  left: 47%;
 }
-.user-button .btn-secondary{
-  width: 140px;
+.user-button .btn-secondary {
+  width: 190px;
+}
+.dashboard-item {
+  border: 1px solid var(--light-gray);
+  height: 150px;
+  margin: 10px 0px;
+  border-radius: 3px;
+}
+.dashboard-image {
+  padding-top: 20px;
+}
+.dashboard-image .card-img {
+  width: 90px !important;
+}
+.dashboard-infos {
+  text-align: left;
+  padding: 10px 0px 0px 15px;
+  border-left: 1px solid var(--light-gray);
+  border-right: 1px solid var(--light-gray);
+  height: 150px;
+}
+.dashboard-infos h3 {
+  margin-bottom: 1rem;
+}
+.answer strong,
+.created strong {
+  float: right;
+}
+
+.dashboard-score .score-number {
+  height: 68px;
+  background-color: var(--light-gray);
+  border-radius: 35px;
+  box-shadow: 0px 0px 5px 3px var(--gold);
+  width: 68px;
+  margin: 0px 0px 0px 20px;
+  padding-top: 22px;
+}
+
+.dashboard-score .score-text {
+  height: 68px;
+  padding-top: 25px;
+}
+.questions .nav.nav-tabs .nav-item {
+  width: 50%;
+}
+.questions .tab-content {
+  border-left: 1px solid var(--light-gray);
+  border-right: 1px solid var(--light-gray);
+  border-bottom: 1px solid var(--light-gray);
+  background-color: var(--very-light-gray);
+}
+.questions .nav.nav-tabs .nav-item .active.nav-link {
+  background-color: var(--very-light-gray) !important;
+  color: var(--black) !important;
+  border-color: var(--light-gray);
+  border-bottom: 1px solid var(--very-light-gray) !important;
+}
+.logout.text-right {
+  display: inline-block;
+  margin: auto;
+  width: 400px
+}
+.navigation .nav-tab-grpup .nav-tab:hover {
+  background-color: var(--very-light-gray);
+  text-decoration: none;
+  color: var(--black);
 }

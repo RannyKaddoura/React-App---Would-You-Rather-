@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import './App.css';
-
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faIgloo } from '@fortawesome/free-solid-svg-icons'
-
 import MainRouter from './components/Router';
-library.add(faIgloo)
+import { Router } from 'react-router-dom';
+import history from './history'; 
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faIgloo } from '@fortawesome/free-solid-svg-icons';
 
-class App extends Component {
+library.add(faIgloo);
+
+export default class App extends Component {
   render() {
     return (
-      <div className="App">
+      <Router history={history}>
+        <div className="App">
           <MainRouter />
-      </div>
+        </div>
+      </Router>
     );
   }
 }
-
-export default App;

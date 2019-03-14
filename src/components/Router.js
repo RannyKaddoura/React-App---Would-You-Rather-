@@ -1,22 +1,27 @@
 import React, { Component } from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Col } from 'reactstrap';
+import { Route, Switch } from 'react-router-dom';
 import history from '../history';
-import Home from './Home';
+import Navigation from './Navigation';
 import Login from './Login';
 import Main from './Main';
+import Questions from './Questions';
+import NewQuestion from './NewQuestion';
+import DashBoard from './DashBoard';
 
 export default class MainRouter extends Component {
   state = {
     user: null,
+    userName: null,
     loading: false
   };
 
-  userHandler = user => {
+  userHandler = (id, name) => {
     this.setState({ loading: true });
     setTimeout(
       function() {
-        this.setState({ user, loading: false });
-        history.push(`/${user}`);
+        this.setState({ user: name, loading: false });
+        history.push(`/${id}`);
       }.bind(this),
       1000
     );
@@ -29,20 +34,18 @@ export default class MainRouter extends Component {
         this.setState({ user: null, loading: false });
         history.push(`/login`);
       }.bind(this),
-      1000
+      100
     );
   };
 
   render() {
     const { user, loading } = this.state;
+
     return (
-      <Router history={history}>
+      <Col>
+        <Navigation user={user} logout={this.logout} />
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => <Main />}
-          />
+          <Route exact path="/" render={() => <Main />} />
           <Route
             exact
             path="/login"
@@ -50,12 +53,14 @@ export default class MainRouter extends Component {
               <Login userHandler={this.userHandler} loading={loading} />
             )}
           />
+          <Route path="/questions" render={() => <Questions user={user} />} />
           <Route
-            path="/:user"
-            render={() => <Home user={user} logout={this.logout} loading={loading}/>}
+            path="/newQuestion"
+            render={() => <NewQuestion user={user} />}
           />
+          <Route path="/dashBoard" render={() => <DashBoard user={user} />} />
         </Switch>
-      </Router>
+      </Col>
     );
   }
 }
