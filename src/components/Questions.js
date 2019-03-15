@@ -6,22 +6,27 @@ import {
   NavItem,
   NavLink,
   Row,
-  Col
+  Col,
+  CardImg
 } from 'reactstrap';
 import classnames from 'classnames';
 import NewQuestion from './NewQuestion';
 import history from '../history';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { fetchQuestions } from '../redux/actions/index';
 
-export default class Questions extends Component {
+class Questions extends Component {
   state = {
     activeTab: '1'
   };
 
   componentDidMount() {
-    const { user } = this.props;
-    if (user === null) {
+    const { selectedUser } = this.props;
+    if (selectedUser === '') {
       history.push('/login');
     }
+    this.props.getAllQuestions();
   }
 
   toggle = tab => {
@@ -33,6 +38,8 @@ export default class Questions extends Component {
   };
 
   render() {
+    const { allQuestions, allUsers } = this.props;
+    
     return (
       <Col className="questions" lg={{ size: 6, offset: 3 }}>
         <Nav tabs>
@@ -59,7 +66,36 @@ export default class Questions extends Component {
           <TabPane tabId="1">
             <Row>
               <Col sm="12">
-                <h4>Tab 1 Contents</h4>
+                {allQuestions !== undefined &&
+                  allQuestions.map(question => (
+                    <Row className="question-card" key={question.id}>
+                      <Col className="author-image" sm={{ size: 4 }}>
+                        {allUsers
+                          .filter(item => item.id === question.author)
+                          .map(user => (
+                            <CardImg
+                              key={user.id}
+                              src={user.avatarURL}
+                              alt="Card image cap"
+                            />
+                          ))}
+                        <p className="question-author">By: {question.author}</p>
+                      </Col>
+                      <Col className="user-name" sm={{ size: 8 }}>
+                        <p className="text-left"><strong>Would you rather .. !</strong></p>
+                        <p className="question-text text-left">
+                          {question.optionOne.text}
+                        </p>
+                        <p>
+                          <Link
+                            className="question-link"
+                            to={`/question/${question.id}`}>
+                            View poll
+                          </Link>
+                        </p>
+                      </Col>
+                    </Row>
+                  ))}
               </Col>
             </Row>
           </TabPane>
@@ -71,3 +107,20 @@ export default class Questions extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    allQuestions: state.allQuestions,
+    allUsers: state.allUsers,
+    selectedUser : state.selectedUser
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    getAllQuestions: () => dispatch(fetchQuestions())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Questions);

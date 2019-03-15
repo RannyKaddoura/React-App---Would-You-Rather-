@@ -3,6 +3,18 @@ import { _getQuestions } from '../../util/_Data';
 
 export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const GET_ALL_QUESTIONS = 'GET_ALL_QUESTIONS';
+export const GET_CURRENT_USER = 'GET_CURRENT_USER';
+
+
+//======================== selectedUsers =============================
+
+export function selectedUser(selectedUser) {
+  return {
+    type: GET_CURRENT_USER,
+    payload: selectedUser
+  };
+};
+
 
 //======================== getAllUsers =============================
 
@@ -49,3 +61,6 @@ export const fetchQuestions = () => {
     });
   };
 };
+
+
+//======================== ============================= =============================

@@ -1,30 +1,22 @@
 import React, { Component } from 'react';
 import { Col } from 'reactstrap';
 import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
 import history from '../history';
 import Navigation from './Navigation';
 import Login from './Login';
 import Main from './Main';
 import Questions from './Questions';
 import NewQuestion from './NewQuestion';
-import DashBoard from './DashBoard';
+import Leaderboard from './Leaderboard';
+import Question from './Question';
+import Welcome from './Welcome';
 
 export default class MainRouter extends Component {
   state = {
     user: null,
     userName: null,
     loading: false
-  };
-
-  userHandler = (id, name) => {
-    this.setState({ loading: true });
-    setTimeout(
-      function() {
-        this.setState({ user: name, loading: false });
-        history.push(`/${id}`);
-      }.bind(this),
-      1000
-    );
   };
 
   logout = () => {
@@ -39,26 +31,25 @@ export default class MainRouter extends Component {
   };
 
   render() {
-    const { user, loading } = this.state;
+    const { loading } = this.state;
 
     return (
       <Col>
-        <Navigation user={user} logout={this.logout} />
+        <Navigation logout={this.logout} />
         <Switch>
           <Route exact path="/" render={() => <Main />} />
           <Route
             exact
             path="/login"
             render={() => (
-              <Login userHandler={this.userHandler} loading={loading} />
+              <Login loading={loading} />
             )}
           />
-          <Route path="/questions" render={() => <Questions user={user} />} />
-          <Route
-            path="/newQuestion"
-            render={() => <NewQuestion user={user} />}
-          />
-          <Route path="/dashBoard" render={() => <DashBoard user={user} />} />
+          <Route path='/user/:selectedUser' component={Welcome} />
+          <Route path="/questions" component={Questions} />
+          <Route path="/newQuestion" component={NewQuestion} />
+          <Route path="/question/:questionId" component={Question} />
+          <Route path="/leaderboard" component={Leaderboard} />
         </Switch>
       </Col>
     );

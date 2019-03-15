@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import history from '../history';
+import { connect } from 'react-redux';
 
-export default class NewQuestion extends Component {
+class NewQuestion extends Component {
   state = {
     activeTab: '1'
   };
 
   componentDidMount() {
-    const { user } = this.props;
-    if (user === null) {
+    const { selectedUser } = this.props;
+    if (selectedUser === '') {
       history.push('/login');
     }
   }
@@ -31,12 +32,7 @@ export default class NewQuestion extends Component {
             <CardText>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book. It has
-              survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
+              ever since the 1500s, when an unknown printe with desktop
               publishing software like Aldus PageMaker including versions of
               Lorem Ipsum.
             </CardText>
@@ -47,3 +43,12 @@ export default class NewQuestion extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    selectedUser: state.selectedUser
+  };
+};
+
+export default connect(
+  mapStateToProps
+)(NewQuestion);

@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { fetchQuestions } from '../redux/actions/index';
 import history from '../history';
 
-class DashBoard extends Component {
+class leaderboard extends Component {
   componentDidMount() {
-    const { user } = this.props;
+    const { selectedUser } = this.props;
     
-      if (user === null ) {
+      if (selectedUser === '' ) {
         history.push('/login');
       }
     this.props.getAllQuestions();
@@ -23,13 +23,13 @@ class DashBoard extends Component {
           allUsers.map(user => (
             <Col
               key={user.id}
-              className="dashboard-item"
+              className="leaderboard-item"
               sm={{ size: 6, offset: 3 }}>
               <Row>
-                <Col className="dashboard-image" sm="3">
+                <Col className="leaderboard-image" sm="3">
                   <CardImg src={user.avatarURL} alt="Card image cap" />
                 </Col>
-                <Col className="dashboard-infos" sm="6">
+                <Col className="leaderboard-infos" sm="6">
                   <h3>{user.name}</h3>
                   <p className="answer">
                     Answer Questions : <strong>5</strong>
@@ -38,7 +38,7 @@ class DashBoard extends Component {
                     Created Questions : <strong>2</strong>
                   </p>
                 </Col>
-                <Col className="dashboard-score" sm="3">
+                <Col className="leaderboard-score" sm="3">
                   <Col className="score-text" lg="12">
                     Score
                   </Col>
@@ -56,7 +56,8 @@ class DashBoard extends Component {
 const mapStateToProps = state => {
   return {
     allUsers: state.allUsers,
-    allQuestions: state.allQuestions
+    allQuestions: state.allQuestions,
+    selectedUser: state.selectedUser
   };
 };
 const mapDispatchToProps = dispatch => {
@@ -68,4 +69,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DashBoard);
+)(leaderboard);

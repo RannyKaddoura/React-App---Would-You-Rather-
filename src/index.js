@@ -11,11 +11,11 @@ import thunkMiddleware from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const logging = store => next => action => {
-  console.group(action.type);
-  console.log('%c prev state', 'color: red', store.getState());
-  console.info('%c action', 'color: green', action);
+  //console.group(action.type);
+  //console.log('%c prev state', 'color: red', store.getState());
+  //console.info('%c action', 'color: green', action);
   let finalResult = next(action);
-  console.groupEnd(action.type);
+  //console.groupEnd(action.type);
   return finalResult;
 };
 

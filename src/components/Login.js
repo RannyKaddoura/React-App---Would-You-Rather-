@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Row } from 'reactstrap';
 import ReactLoading from 'react-loading';
-import UserCard from './userCard';
+import UserCard from './UserCard';
 import { connect } from 'react-redux';
 import { fetchUsers } from '../redux/actions/index';
 
@@ -18,7 +18,7 @@ class Login extends Component {
   }
 
   render() {
-    const { userHandler, allUsers } = this.props;
+    const { allUsers } = this.props;
     const { loading } = this.state;
 
     if (loading) {
@@ -40,7 +40,7 @@ class Login extends Component {
               key={user.id}
               sm={{ size: 6, order: 2, offset: 3 }}
               className="user-card">
-              <UserCard user={user} userHandler={userHandler} />
+              <UserCard user={user}/>
             </Col>
           ))}
       </Row>

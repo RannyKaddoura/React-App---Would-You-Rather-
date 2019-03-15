@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { GET_ALL_USERS, GET_ALL_QUESTIONS } from '../actions/index';
+import { GET_ALL_USERS, GET_ALL_QUESTIONS, GET_CURRENT_USER } from '../actions/index';
 
 function allUsers(state = [], action) {
   switch (action.type) {
@@ -17,4 +17,13 @@ function allQuestions(state = [], action) {
         return state;
     }
   }
-export default combineReducers({ allUsers, allQuestions });
+  function selectedUser(state = '', action) {
+      switch (action.type) {
+        case GET_CURRENT_USER:
+          return action.payload;
+        default:
+          return state;
+      }
+    }
+
+export default combineReducers({ allUsers, allQuestions, selectedUser });
