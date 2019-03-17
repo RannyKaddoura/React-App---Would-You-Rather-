@@ -12,7 +12,7 @@ class UserCard extends Component {
     setTimeout(
       function() {
         history.push(`/user/${user}`)
-      }.bind(this),
+      },
       500
     );
   };

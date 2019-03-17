@@ -38,8 +38,8 @@ class Questions extends Component {
   };
 
   render() {
-    const { allQuestions, allUsers } = this.props;
-    
+    const { allQuestions, allUsers, newQuestionResponse } = this.props;
+    console.log("newQuestionResponse in Compo",newQuestionResponse)
     return (
       <Col className="questions" lg={{ size: 6, offset: 3 }}>
         <Nav tabs>
@@ -111,7 +111,8 @@ const mapStateToProps = state => {
   return {
     allQuestions: state.allQuestions,
     allUsers: state.allUsers,
-    selectedUser : state.selectedUser
+    selectedUser : state.selectedUser,
+    newQuestionResponse: state.newQuestionResponse
   };
 };
 const mapDispatchToProps = dispatch => {

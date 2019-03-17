@@ -225,7 +225,7 @@ label.btn-radio svg circle {
   stroke: #c8ccd4;
 }
 label.btn-radio svg path {
-  stroke: #0ccdf8;
+  stroke: var(--gray);
 }
 label.btn-radio svg path.inner {
   stroke-width: 6;
@@ -256,3 +256,24 @@ label.btn-radio span {
   margin-left: 15px;
 }
 /* ===================== End Styling Animation Radio ======================= */
+.answer-submit {
+  margin-top: 11px;
+}
+.selectedUser-avatar {
+  width: 140px;
+  filter: grayscale(80%);
+}
+.new-question {
+  width: 478px;
+  padding: 10px !important;
+}
+
+.new-question .btn.btn-secondary,
+.new-question input {
+  display: block;
+  width: 100%;
+  margin: 0.3rem 0;
+}
+.new-question .btn.btn-secondary {
+  margin-top: 20px;
+}

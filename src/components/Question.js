@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row, Button, CardImg, Input, FormGroup, Label } from 'reactstrap';
+import { Col, Row, Button } from 'reactstrap';
 import history from '../history';
 import { connect } from 'react-redux';
 import { CircleSvg } from '../util/svg';
@@ -17,9 +17,15 @@ class Question extends Component {
     setTimeout(
       function() {
         //history.push(`/questions`);
-      }.bind(this),
+      },
       100
     );
+  };
+
+  radioChanger = event => {
+    const name = event.target.id;
+    console.log("radio name",name);
+
   };
 
   render() {
@@ -38,10 +44,11 @@ class Question extends Component {
                   allUsers
                     .filter(item => item.id === selectedUser)
                     .map(user => (
-                      <CardImg
+                      <img
+                        className="selectedUser-avatar"
                         key={user.id}
                         src={user.avatarURL}
-                        alt="Card image cap"
+                        alt="avatar"
                       />
                     ))}
               </Col>
@@ -51,14 +58,13 @@ class Question extends Component {
                 </p>
 
                 <div className="row">
-                  <div className="cntr">
+                  <Col className="text-left" sm="12">
                     <label htmlFor="optionOne" className="btn-radio">
                       <input
-                        type="radio"
+                        type="radio" 
                         id="optionOne"
-                        value="optionOne"
-                        name="radio-grp"
-                        onClick={this.radioChanger}
+                        name="option"
+                        onChange={this.radioChanger}
                       />
                       <CircleSvg />
                       <span>
@@ -67,15 +73,14 @@ class Question extends Component {
                           .map(q => q.optionOne.text)}
                       </span>
                     </label>
-                  </div>
-                  <div className="cntr">
+                  </Col>
+                  <Col className="text-left" sm="12">
                     <label htmlFor="optionTwo" className="btn-radio">
                       <input
                         type="radio"
                         id="optionTwo"
-                        value="optionTwo"
-                        name="radio-grp"
-                        onClick={this.radioChanger}
+                        name="option"
+                        onChange={this.radioChanger}
                       />
                       <CircleSvg />
                       <span>
@@ -84,10 +89,9 @@ class Question extends Component {
                           .map(q => q.optionTwo.text)}
                       </span>
                     </label>
-                  </div>
+                  </Col>
+                <Button className="answer-submit" onClick={() => this.SubmitHandler()}>Submit</Button>
                 </div>
-
-                <Button onClick={() => this.SubmitHandler()}>Submit</Button>
               </Col>
             </Row>
           </Col>

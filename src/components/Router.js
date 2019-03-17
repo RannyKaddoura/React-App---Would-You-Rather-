@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Col } from 'reactstrap';
 import { Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
 import history from '../history';
 import Navigation from './Navigation';
 import Login from './Login';
@@ -25,7 +24,7 @@ export default class MainRouter extends Component {
       function() {
         this.setState({ user: null, loading: false });
         history.push(`/login`);
-      }.bind(this),
+      },
       100
     );
   };

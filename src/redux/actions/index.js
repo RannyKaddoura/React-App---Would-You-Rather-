@@ -1,10 +1,28 @@
-import { _getUsers } from '../../util/_Data';
-import { _getQuestions } from '../../util/_Data';
+import { _getUsers, _getQuestions, _saveQuestion } from '../../util/_Data';
 
 export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const GET_ALL_QUESTIONS = 'GET_ALL_QUESTIONS';
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
+export const NEW_QUESTIONS = 'NEW_QUESTIONS';
 
+
+//======================== newQuestion =============================
+
+const newQuestion = newQuestionResponse => {
+  console.log("newQuestionResponse",newQuestionResponse);
+  return {
+    type: NEW_QUESTIONS,
+    newQuestionResponse
+  };
+};
+
+export const postQuestion = question => {
+  return dispatch => {
+    return _saveQuestion(question).then(newQuestionResponse => {
+      dispatch(newQuestion(newQuestionResponse));
+    });
+  };
+};
 
 //======================== selectedUsers =============================
 

@@ -15,7 +15,7 @@ class leaderboard extends Component {
   }
 
   render() {
-    const { allUsers, allQuestions, user } = this.props;
+    const { allUsers } = this.props;
 
     return (
       <Col>
