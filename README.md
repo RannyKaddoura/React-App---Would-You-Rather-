@@ -6,7 +6,15 @@ This project is our  React cours [Udacity React Nanodegree](https://www.udacity.
 
 Follow these steps to run this project from your local server: 
 
-1. Download the node package manager
+1. Clone this repository
+
+
+```terminal
+   git clone git@github.com:RannyKaddoura/React-App---Would-You-Rather-.git
+```
+
+
+2. Download the node package manager
 
  
   ```terminal
@@ -14,7 +22,7 @@ Follow these steps to run this project from your local server:
   ```
 
 
-2. Run the project 
+3. Run the project 
 
  
   ```terminal
