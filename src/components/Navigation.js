@@ -10,8 +10,8 @@ require('react-router-tabs/styles/react-router-tabs.css');
 
 class Navigation extends Component {
   componentDidMount() {
-    const { selectedUser } = this.props;
-    if (selectedUser === '') {
+    const { currentUser } = this.props;
+    if (currentUser === '') {
       history.push('/login');
     }
   }
@@ -23,7 +23,6 @@ class Navigation extends Component {
 
   render() {
     const { currentUser } = this.props;
-    console.log("currentUser",currentUser)
     return (
       <Row className="navigation mt-4 mb-4">
         <Col className="text-left" lg={{ size: 3 }} />

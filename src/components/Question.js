@@ -3,8 +3,14 @@ import { Col, Row, Button } from 'reactstrap';
 import history from '../history';
 import { connect } from 'react-redux';
 import { CircleSvg } from '../util/svg';
+import { saveQuestionAnswer } from '../redux/actions/index';
+import { bindActionCreators } from 'redux';
 
 class Question extends Component {
+  state = {
+    answer: null
+  };
+
   componentDidMount() {
     const { selectedUser } = this.props;
     if (selectedUser === '') {
@@ -12,22 +18,28 @@ class Question extends Component {
     }
   }
 
-  SubmitHandler = () => {
-    console.log('SubmitHandler');
-    setTimeout(
-      function() {
-        //history.push(`/questions`);
-      },
-      100
-    );
-  };
-
   radioChanger = event => {
     const name = event.target.id;
-    console.log("radio name",name);
-
+    if (name === 'optionOne') {
+      this.setState({ answer: 'optionOne' });
+    } else {
+      this.setState({ answer: 'optionTwo' });
+    }
   };
 
+  SubmitHandler = () => {
+    const { selectedUser, match } = this.props;
+    const { answer } = this.state;
+    const qid = match.params.questionId;
+
+    this.props
+      .saveQuestionAnswer(selectedUser, qid, answer)
+      .then(history.push(`/questions`));
+
+    //setTimeout(function() {
+    //  history.push(`/questions`);
+    //}, 1000);
+  };
   render() {
     const { selectedUser, allUsers, allQuestions, match } = this.props;
 
@@ -61,7 +73,7 @@ class Question extends Component {
                   <Col className="text-left" sm="12">
                     <label htmlFor="optionOne" className="btn-radio">
                       <input
-                        type="radio" 
+                        type="radio"
                         id="optionOne"
                         name="option"
                         onChange={this.radioChanger}
@@ -90,7 +102,11 @@ class Question extends Component {
                       </span>
                     </label>
                   </Col>
-                <Button className="answer-submit" onClick={() => this.SubmitHandler()}>Submit</Button>
+                  <Button
+                    className="answer-submit"
+                    onClick={this.SubmitHandler}>
+                    Submit
+                  </Button>
                 </div>
               </Col>
             </Row>
@@ -109,4 +125,11 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Question);
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ saveQuestionAnswer }, dispatch);
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Question);

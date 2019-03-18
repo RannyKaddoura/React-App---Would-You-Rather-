@@ -3,7 +3,8 @@ import {
   GET_ALL_USERS,
   GET_ALL_QUESTIONS,
   GET_CURRENT_USER,
-  NEW_QUESTIONS
+  NEW_QUESTIONS,
+  SAVE_ANSWER
 } from '../actions/index';
 
 function allUsers(state = [], action) {
@@ -30,7 +31,6 @@ function selectedUser(state = '', action) {
       return state;
   }
 }
-
 function newQuestion(state = null, action) {
   switch (action.type) {
     case NEW_QUESTIONS:
@@ -39,4 +39,18 @@ function newQuestion(state = null, action) {
       return state;
   }
 }
-export default combineReducers({ allUsers, allQuestions, selectedUser, newQuestion });
+function answerQuestion(state = null, action) {
+  switch (action.type) {
+    case SAVE_ANSWER:
+      return action.answerResponse;
+    default:
+      return state;
+  }
+}
+export default combineReducers({
+  allUsers,
+  allQuestions,
+  selectedUser,
+  newQuestion,
+  answerQuestion
+});

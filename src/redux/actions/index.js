@@ -1,15 +1,40 @@
-import { _getUsers, _getQuestions, _saveQuestion } from '../../util/_Data';
+import {
+  _getUsers,
+  _getQuestions,
+  _saveQuestion,
+  _saveQuestionAnswer
+} from '../../util/_Data';
 
 export const GET_ALL_USERS = 'GET_ALL_USERS';
 export const GET_ALL_QUESTIONS = 'GET_ALL_QUESTIONS';
 export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const NEW_QUESTIONS = 'NEW_QUESTIONS';
+export const SAVE_ANSWER = 'SAVE_ANSWER';
 
+//======================== saveAnswer =============================
+
+const saveAnswer = answerResponse => {
+  
+  return {
+    type: SAVE_ANSWER,
+    answerResponse
+  };
+};
+
+export const saveQuestionAnswer = (authedUser, qid, answer) => {
+  return dispatch => {
+    return _saveQuestionAnswer({ authedUser, qid, answer }).then(
+      res => {
+        dispatch(saveAnswer('answerResponse'));
+      }
+    );
+  };
+};
 
 //======================== newQuestion =============================
 
 const newQuestion = newQuestionResponse => {
-  console.log("newQuestionResponse",newQuestionResponse);
+  console.log('newQuestionResponse', newQuestionResponse);
   return {
     type: NEW_QUESTIONS,
     newQuestionResponse
@@ -31,8 +56,7 @@ export function selectedUser(selectedUser) {
     type: GET_CURRENT_USER,
     payload: selectedUser
   };
-};
-
+}
 
 //======================== getAllUsers =============================
 
@@ -80,5 +104,4 @@ export const fetchQuestions = () => {
   };
 };
 
-
-//======================== ============================= =============================
+//==========================================================================
