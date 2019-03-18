@@ -16,11 +16,26 @@ class Questions extends Component {
   };
 
   componentDidMount() {
-    const { allUsers, allQuestions, selectedUser } = this.props;
-
     this.props.fetchUsers();
     this.props.fetchQuestions();
-    
+  }
+
+  componentWillMount() {
+    this.props.fetchUsers();
+    this.props.fetchQuestions();
+  }
+
+  toggle = tab => {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
+  };
+
+  componentWillReceiveProps() {
+    const { allUsers, allQuestions, selectedUser } = this.props;
+
     if (selectedUser === '') {
       history.push('/login');
     } else {
@@ -47,20 +62,6 @@ class Questions extends Component {
       }
     }
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location !== this.props.location) {
-      this.props.fetchQuestions();
-    }
-  }
-
-  toggle = tab => {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
-    }
-  };
 
   render() {
     const { allUsers, selectedUser } = this.props;
