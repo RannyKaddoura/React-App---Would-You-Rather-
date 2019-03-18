@@ -3,7 +3,8 @@ import { Col, Row } from 'reactstrap';
 import ReactLoading from 'react-loading';
 import UserCard from './UserCard';
 import { connect } from 'react-redux';
-import { fetchUsers } from '../redux/actions/index';
+import { fetchUsers, fetchQuestions } from '../redux/actions/index';
+import { bindActionCreators } from 'redux';
 
 class Login extends Component {
   state = {
@@ -12,7 +13,8 @@ class Login extends Component {
 
   componentDidMount() {
     this.setState({ loading: true });
-    this.props.getAllUsers().then(res => {
+    this.props.fetchUsers().then(res => {
+      this.props.fetchQuestions();
       this.setState({ loading: false });
     });
   }
@@ -32,7 +34,9 @@ class Login extends Component {
     return (
       <Row>
         <Col className="mb-3 mt-5" sm={{ size: 12 }}>
-          <h1>Who Are You !! Please <strong>Login</strong></h1>
+          <h1>
+            Who Are You !! Please <strong>Login</strong>
+          </h1>
         </Col>
         {allUsers.length > 0 &&
           allUsers.map(user => (
@@ -40,7 +44,7 @@ class Login extends Component {
               key={user.id}
               sm={{ size: 6, order: 2, offset: 3 }}
               className="user-card">
-              <UserCard user={user}/>
+              <UserCard user={user} />
             </Col>
           ))}
       </Row>
@@ -55,9 +59,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    getAllUsers: () => dispatch(fetchUsers())
-  };
+  return bindActionCreators({ fetchUsers, fetchQuestions }, dispatch);
 };
 
 export default connect(

@@ -14,7 +14,6 @@ export const SAVE_ANSWER = 'SAVE_ANSWER';
 //======================== saveAnswer =============================
 
 const saveAnswer = answerResponse => {
-  
   return {
     type: SAVE_ANSWER,
     answerResponse
@@ -34,7 +33,6 @@ export const saveQuestionAnswer = (authedUser, qid, answer) => {
 //======================== newQuestion =============================
 
 const newQuestion = newQuestionResponse => {
-  console.log('newQuestionResponse', newQuestionResponse);
   return {
     type: NEW_QUESTIONS,
     newQuestionResponse

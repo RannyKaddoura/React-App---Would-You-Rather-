@@ -10,6 +10,7 @@ import NewQuestion from './NewQuestion';
 import Leaderboard from './Leaderboard';
 import Question from './Question';
 import Welcome from './Welcome';
+import Results from './Results';
 
 export default class MainRouter extends Component {
   state = {
@@ -20,13 +21,10 @@ export default class MainRouter extends Component {
 
   logout = () => {
     this.setState({ loading: true });
-    setTimeout(
-      function() {
-        this.setState({ user: null, loading: false });
-        history.push(`/login`);
-      },
-      100
-    );
+    setTimeout(function() {
+      this.setState({ user: null, loading: false });
+      history.push(`/login`);
+    }, 100);
   };
 
   render() {
@@ -40,15 +38,14 @@ export default class MainRouter extends Component {
           <Route
             exact
             path="/login"
-            render={() => (
-              <Login loading={loading} />
-            )}
+            render={() => <Login loading={loading} />}
           />
-          <Route path='/user/:selectedUser' component={Welcome} />
+          <Route path="/user/:selectedUser" component={Welcome} />
           <Route path="/questions" component={Questions} />
           <Route path="/newQuestion" component={NewQuestion} />
           <Route path="/question/:questionId" component={Question} />
           <Route path="/leaderboard" component={Leaderboard} />
+          <Route path="/results/:questionId" component={Results} />
         </Switch>
       </Col>
     );

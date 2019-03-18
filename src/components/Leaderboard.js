@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 import { CardImg, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
-import { fetchQuestions } from '../redux/actions/index';
+import { fetchUsers } from '../redux/actions/index';
 import history from '../history';
+import { bindActionCreators } from 'redux';
 
 class leaderboard extends Component {
+  
   componentDidMount() {
     const { selectedUser } = this.props;
-    
-      if (selectedUser === '' ) {
-        history.push('/login');
-      }
-    this.props.getAllQuestions();
+    if (selectedUser === '') {
+      history.push('/login');
+    }
+    this.props.fetchUsers();
   }
 
   render() {
     const { allUsers } = this.props;
-
     return (
       <Col>
         {allUsers.length > 0 &&
@@ -32,10 +32,11 @@ class leaderboard extends Component {
                 <Col className="leaderboard-infos" sm="6">
                   <h3>{user.name}</h3>
                   <p className="answer">
-                    Answer Questions : <strong>5</strong>
+                    Answer Questions :
+                    <strong>{Object.keys(user.answers).length} </strong>
                   </p>
                   <p className="created">
-                    Created Questions : <strong>2</strong>
+                    Created Questions :<strong>{user.questions.length}</strong>
                   </p>
                 </Col>
                 <Col className="leaderboard-score" sm="3">
@@ -43,7 +44,7 @@ class leaderboard extends Component {
                     Score
                   </Col>
                   <Col className="score-number" lg="12">
-                    10
+                    {Object.keys(user.answers).length + user.questions.length}
                   </Col>
                 </Col>
               </Row>
@@ -56,14 +57,11 @@ class leaderboard extends Component {
 const mapStateToProps = state => {
   return {
     allUsers: state.allUsers,
-    allQuestions: state.allQuestions,
     selectedUser: state.selectedUser
   };
 };
 const mapDispatchToProps = dispatch => {
-  return {
-    getAllQuestions: () => dispatch(fetchQuestions())
-  };
+  return bindActionCreators({ fetchUsers }, dispatch);
 };
 
 export default connect(

@@ -148,6 +148,7 @@
 .tab-pane.active .row {
   margin-right: 0px;
   margin-left: 0px;
+  padding: 0px 1rem;
 }
 .navigation .nav-tab-grpup .nav-tab:hover {
   background-color: var(--very-light-gray);
@@ -277,4 +278,8 @@ label.btn-radio span {
 }
 .new-question .btn.btn-secondary {
   margin-top: 20px;
+}
+.current-user-image img {
+  margin-top: 40px;
+  width: 110% !important;
 }

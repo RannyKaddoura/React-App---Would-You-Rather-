@@ -1,32 +1,57 @@
 import React, { Component } from 'react';
-import {
-  TabContent,
-  TabPane,
-  Nav,
-  NavItem,
-  NavLink,
-  Row,
-  Col,
-  CardImg
-} from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink, Col } from 'reactstrap';
 import classnames from 'classnames';
-import NewQuestion from './NewQuestion';
+import UnAnswered from './UnAnswered';
+import Answered from './Answered';
 import history from '../history';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { fetchQuestions } from '../redux/actions/index';
+import { fetchQuestions, fetchUsers } from '../redux/actions/index';
+import { bindActionCreators } from 'redux';
 
 class Questions extends Component {
   state = {
-    activeTab: '1'
+    activeTab: '1',
+    answeredArray: [],
+    unAnsweredArray: []
   };
 
   componentDidMount() {
-    const { selectedUser } = this.props;
+    const { allUsers, allQuestions, selectedUser } = this.props;
+
+    this.props.fetchUsers();
+    this.props.fetchQuestions();
+    
     if (selectedUser === '') {
       history.push('/login');
+    } else {
+      const userAnsweredObject = allUsers
+        .filter(user => user.id === selectedUser)
+        .map(user => {
+          return user.answers;
+        });
+      if (userAnsweredObject !== undefined && userAnsweredObject !== null) {
+        const userAnsweredArray = Object.keys(userAnsweredObject[0]);
+
+        const answeredArray = [];
+        const unAnsweredArray = [];
+
+        allQuestions.map(Q => {
+          if (userAnsweredArray.indexOf(Q.id) !== -1) {
+            unAnsweredArray.push(Q);
+          } else {
+            answeredArray.push(Q);
+          }
+          return null;
+        });
+        this.setState({ answeredArray, unAnsweredArray });
+      }
     }
-    this.props.getAllQuestions();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location !== this.props.location) {
+      this.props.fetchQuestions();
+    }
   }
 
   toggle = tab => {
@@ -38,8 +63,9 @@ class Questions extends Component {
   };
 
   render() {
-    const { allQuestions, allUsers, newQuestionResponse } = this.props;
-    console.log("newQuestionResponse in Compo",newQuestionResponse)
+    const { allUsers, selectedUser } = this.props;
+    const { unAnsweredArray, answeredArray } = this.state;
+
     return (
       <Col className="questions" lg={{ size: 6, offset: 3 }}>
         <Nav tabs>
@@ -64,61 +90,35 @@ class Questions extends Component {
         </Nav>
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="1">
-            <Row>
-              <Col sm="12">
-                {allQuestions !== undefined &&
-                  allQuestions.map(question => (
-                    <Row className="question-card" key={question.id}>
-                      <Col className="author-image" sm={{ size: 4 }}>
-                        {allUsers
-                          .filter(item => item.id === question.author)
-                          .map(user => (
-                            <CardImg
-                              key={user.id}
-                              src={user.avatarURL}
-                              alt="Card image cap"
-                            />
-                          ))}
-                        <p className="question-author">By: {question.author}</p>
-                      </Col>
-                      <Col className="user-name" sm={{ size: 8 }}>
-                        <p className="text-left"><strong>Would you rather .. !</strong></p>
-                        <p className="question-text text-left">
-                          {question.optionOne.text}
-                        </p>
-                        <p>
-                          <Link
-                            className="question-link"
-                            to={`/question/${question.id}`}>
-                            View poll
-                          </Link>
-                        </p>
-                      </Col>
-                    </Row>
-                  ))}
-              </Col>
-            </Row>
+            <Answered
+              answeredArray={answeredArray}
+              selectedUser={selectedUser}
+              allUsers={allUsers}
+            />
           </TabPane>
           <TabPane tabId="2">
-            <NewQuestion />
+            <UnAnswered
+              unAnsweredArray={unAnsweredArray}
+              selectedUser={selectedUser}
+              allUsers={allUsers}
+            />
           </TabPane>
         </TabContent>
       </Col>
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
     allQuestions: state.allQuestions,
     allUsers: state.allUsers,
-    selectedUser : state.selectedUser,
-    newQuestionResponse: state.newQuestionResponse
+    selectedUser: state.selectedUser
   };
 };
+
 const mapDispatchToProps = dispatch => {
-  return {
-    getAllQuestions: () => dispatch(fetchQuestions())
-  };
+  return bindActionCreators({ fetchQuestions, fetchUsers }, dispatch);
 };
 
 export default connect(

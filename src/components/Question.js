@@ -31,21 +31,15 @@ class Question extends Component {
     const { selectedUser, match } = this.props;
     const { answer } = this.state;
     const qid = match.params.questionId;
-
-    this.props
-      .saveQuestionAnswer(selectedUser, qid, answer)
-      .then(history.push(`/questions`));
-
-    //setTimeout(function() {
-    //  history.push(`/questions`);
-    //}, 1000);
+    this.props.saveQuestionAnswer(selectedUser, qid, answer)
+       
+        setTimeout(function() {
+          history.push(`/results/${qid}`);
+        }, 1000)
   };
+
   render() {
     const { selectedUser, allUsers, allQuestions, match } = this.props;
-
-    console.log('allQuestions', allQuestions);
-    console.log('allUsers', allUsers);
-
     return (
       <Row>
         {selectedUser !== '' && (

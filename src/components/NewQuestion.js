@@ -47,14 +47,14 @@ class NewQuestion extends Component {
       author: selectedUser
     };
     this.setState({ question });
-    this.props.postQuestion(question).then(function() {
-      history.push('/questions');
+    this.props.postQuestion(question).then(function(res) {
+      console.log("postQuestion",res);
+      history.push(`/questions`);
     }, 1000);
   };
 
   render() {
     const { optionTwoText, optionOneText } = this.state;
-
     return (
       <Row>
         <Col sm="12" md={{ size: 6, offset: 3 }}>

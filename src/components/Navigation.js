@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Button, Col, Row } from 'reactstrap';
 import { NavTab } from 'react-router-tabs';
 import history from '../history';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { selectedUser } from '../redux/actions/index';
 import { bindActionCreators } from 'redux';
 
@@ -18,7 +18,7 @@ class Navigation extends Component {
 
   logoutHandler = () => {
     this.props.selectedUser('');
-    history.push(`/login`)
+    history.push(`/login`);
   };
 
   render() {
@@ -49,7 +49,6 @@ class Navigation extends Component {
   }
 }
 
-
 const mapStateToProps = state => {
   return {
     currentUser: state.selectedUser
@@ -59,7 +58,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({ selectedUser }, dispatch);
 };
-
 
 export default connect(
   mapStateToProps,
