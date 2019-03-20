@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Row, Button, CardImg } from 'reactstrap';
-import { selectedUser } from '../redux/actions/index';
+import { selectedUser, fetchUsers, fetchQuestions } from '../redux/actions/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import history from '../history';
@@ -9,9 +9,12 @@ class UserCard extends Component {
 
   currentUserHandler = user => {
     this.props.selectedUser(user);
+    this.props.fetchQuestions();
+    this.props.fetchUsers();
+    sessionStorage.setItem("auth",process.env.REACT_APP_AUTH_TOKEN);
     setTimeout(
       function() {
-        history.push(`/user/${user}`)
+        history.push(`/`)
       },
       500
     );
@@ -37,7 +40,7 @@ class UserCard extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ selectedUser }, dispatch);
+  return bindActionCreators({ selectedUser, fetchQuestions, fetchUsers }, dispatch);
 };
 
 export default connect(

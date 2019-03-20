@@ -11,13 +11,6 @@ class Question extends Component {
     answer: null
   };
 
-  componentDidMount() {
-    const { selectedUser } = this.props;
-    if (selectedUser === '') {
-      history.push('/login');
-    }
-  }
-
   radioChanger = event => {
     const name = event.target.id;
     if (name === 'optionOne') {

@@ -9,17 +9,13 @@ import { bindActionCreators } from 'redux';
 require('react-router-tabs/styles/react-router-tabs.css');
 
 class Navigation extends Component {
-  componentDidMount() {
-    const { currentUser } = this.props;
-    if (currentUser === '') {
-      history.push('/login');
-    }
-  }
 
   logoutHandler = () => {
     this.props.selectedUser('');
+    sessionStorage.removeItem('auth');
     history.push(`/login`);
   };
+  
 
   render() {
     const { currentUser } = this.props;
@@ -32,7 +28,7 @@ class Navigation extends Component {
           <NavTab to="/leaderboard">Leaderboard</NavTab>
         </Col>
         <Col className="text-right" lg={{ size: 3 }}>
-          {currentUser !== '' && (
+          {sessionStorage.getItem('auth') === 'vJeHm0n5L3osynxL3DWWC6SjIYZ0DU2w' && (
             <span>
               Hello {currentUser}
               <Button

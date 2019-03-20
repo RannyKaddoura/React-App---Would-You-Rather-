@@ -2,16 +2,11 @@ import React, { Component } from 'react';
 import { CardImg, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { fetchUsers } from '../redux/actions/index';
-import history from '../history';
 import { bindActionCreators } from 'redux';
 
 class leaderboard extends Component {
   
   componentDidMount() {
-    const { selectedUser } = this.props;
-    if (selectedUser === '') {
-      history.push('/login');
-    }
     this.props.fetchUsers();
   }
 

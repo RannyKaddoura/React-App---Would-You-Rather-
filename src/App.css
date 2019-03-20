@@ -283,3 +283,6 @@ label.btn-radio span {
   margin-top: 40px;
   width: 110% !important;
 }
+.error-image .card-img {
+  width: 100% !important;
+}

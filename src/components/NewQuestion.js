@@ -13,13 +13,6 @@ class NewQuestion extends Component {
     question: null
   };
 
-  componentDidMount() {
-    const { selectedUser } = this.props;
-    if (selectedUser === '') {
-      history.push('/login');
-    }
-  }
-
   toggle = tab => {
     if (this.state.activeTab !== tab) {
       this.setState({
