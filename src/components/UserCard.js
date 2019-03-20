@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Col, Row, Button, CardImg } from 'reactstrap';
 import { selectedUser, fetchUsers, fetchQuestions } from '../redux/actions/index';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import history from '../history';
 
 class UserCard extends Component {
@@ -39,11 +38,7 @@ class UserCard extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ selectedUser, fetchQuestions, fetchUsers }, dispatch);
-};
-
 export default connect(
   null,
-  mapDispatchToProps
+  { selectedUser, fetchQuestions, fetchUsers }
 )(UserCard);

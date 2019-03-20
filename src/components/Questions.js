@@ -6,7 +6,6 @@ import Answered from './Answered';
 import history from '../history';
 import { connect } from 'react-redux';
 import { fetchQuestions, fetchUsers } from '../redux/actions/index';
-import { bindActionCreators } from 'redux';
 
 class Questions extends Component {
   state = {
@@ -110,19 +109,15 @@ class Questions extends Component {
   }
 }
 
-const mapStateToProps = state => {
+function mapStateToProps({allQuestions, allUsers, selectedUser }) {
   return {
-    allQuestions: state.allQuestions,
-    allUsers: state.allUsers,
-    selectedUser: state.selectedUser
+    allQuestions,
+    allUsers,
+    selectedUser
   };
-};
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ fetchQuestions, fetchUsers }, dispatch);
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { fetchQuestions, fetchUsers }
 )(Questions);

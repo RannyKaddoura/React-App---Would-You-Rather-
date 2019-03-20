@@ -4,12 +4,13 @@ import {
   _saveQuestion,
   _saveQuestionAnswer
 } from '../../util/_Data';
-
-export const GET_ALL_USERS = 'GET_ALL_USERS';
-export const GET_ALL_QUESTIONS = 'GET_ALL_QUESTIONS';
-export const GET_CURRENT_USER = 'GET_CURRENT_USER';
-export const NEW_QUESTIONS = 'NEW_QUESTIONS';
-export const SAVE_ANSWER = 'SAVE_ANSWER';
+import {
+  GET_ALL_USERS,
+  GET_ALL_QUESTIONS,
+  GET_CURRENT_USER,
+  NEW_QUESTIONS,
+  SAVE_ANSWER
+} from './ActionsType';
 
 //======================== saveAnswer =============================
 
@@ -22,11 +23,9 @@ const saveAnswer = answerResponse => {
 
 export const saveQuestionAnswer = (authedUser, qid, answer) => {
   return dispatch => {
-    return _saveQuestionAnswer({ authedUser, qid, answer }).then(
-      res => {
-        dispatch(saveAnswer('answerResponse'));
-      }
-    );
+    return _saveQuestionAnswer({ authedUser, qid, answer }).then(res => {
+      dispatch(saveAnswer('answerResponse'));
+    });
   };
 };
 

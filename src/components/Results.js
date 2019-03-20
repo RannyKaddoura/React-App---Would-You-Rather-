@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Col, CardImg, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import { fetchQuestions } from '../redux/actions/index';
-import { bindActionCreators } from 'redux';
 
 class Results extends Component {
   componentDidMount() {
@@ -58,20 +57,15 @@ class Results extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+function mapStateToProps({allQuestions,allUsers,selectedUser,newQuestionResponse }) {
   return {
-    allQuestions: state.allQuestions,
-    allUsers: state.allUsers,
-    selectedUser: state.selectedUser,
-    newQuestionResponse: state.newQuestionResponse
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ fetchQuestions }, dispatch);
-};
+    allQuestions,
+    allUsers,
+    selectedUser,
+    newQuestionResponse
+};}
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {fetchQuestions}
 )(Results);

@@ -4,7 +4,6 @@ import ReactLoading from 'react-loading';
 import UserCard from './UserCard';
 import { connect } from 'react-redux';
 import { fetchUsers, fetchQuestions } from '../redux/actions/index';
-import { bindActionCreators } from 'redux';
 
 class Login extends Component {
   state = {
@@ -35,7 +34,7 @@ class Login extends Component {
       <Row>
         <Col className="mb-3 mt-5" sm={{ size: 12 }}>
           <h1>
-            Who Are You !! Please <strong>Login</strong>
+            Who Are You.. !!! Please <strong>Login</strong>
           </h1>
         </Col>
         {allUsers.length > 0 &&
@@ -52,17 +51,11 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    allUsers: state.allUsers
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ fetchUsers, fetchQuestions }, dispatch);
+function mapStateToProps({ allUsers }) {
+  return { allUsers };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {fetchUsers, fetchQuestions}
 )(Login);

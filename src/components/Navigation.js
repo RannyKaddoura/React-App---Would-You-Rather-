@@ -4,7 +4,6 @@ import { NavTab } from 'react-router-tabs';
 import history from '../history';
 import { connect } from 'react-redux';
 import { selectedUser } from '../redux/actions/index';
-import { bindActionCreators } from 'redux';
 
 require('react-router-tabs/styles/react-router-tabs.css');
 
@@ -45,17 +44,11 @@ class Navigation extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    currentUser: state.selectedUser
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ selectedUser }, dispatch);
+function mapStateToProps ({currentUser}) {
+  return { currentUser };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {selectedUser}
 )(Navigation);

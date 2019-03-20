@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { CardImg, Row, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { fetchUsers } from '../redux/actions/index';
-import { bindActionCreators } from 'redux';
 
 class leaderboard extends Component {
-  
   componentDidMount() {
     this.props.fetchUsers();
   }
@@ -49,17 +47,13 @@ class leaderboard extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+function mapStateToProps({ allUsers, selectedUser }) {
   return {
-    allUsers: state.allUsers,
-    selectedUser: state.selectedUser
+    allUsers,
+    selectedUser
   };
-};
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ fetchUsers }, dispatch);
-};
-
+}
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  { fetchUsers }
 )(leaderboard);

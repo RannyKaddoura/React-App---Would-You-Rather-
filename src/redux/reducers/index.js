@@ -5,7 +5,7 @@ import {
   GET_CURRENT_USER,
   NEW_QUESTIONS,
   SAVE_ANSWER
-} from '../actions/index';
+} from '../actions/ActionsType';
 
 function allUsers(state = [], action) {
   switch (action.type) {

@@ -4,7 +4,6 @@ import history from '../history';
 import { connect } from 'react-redux';
 import { CircleSvg } from '../util/svg';
 import { saveQuestionAnswer } from '../redux/actions/index';
-import { bindActionCreators } from 'redux';
 
 class Question extends Component {
   state = {
@@ -104,19 +103,15 @@ class Question extends Component {
   }
 }
 
-const mapStateToProps = state => {
+function mapStateToProps({allQuestions, allUsers, selectedUser}) {
   return {
-    allQuestions: state.allQuestions,
-    allUsers: state.allUsers,
-    selectedUser: state.selectedUser
+    allQuestions,
+    allUsers,
+    selectedUser
   };
-};
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ saveQuestionAnswer }, dispatch);
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {saveQuestionAnswer}
 )(Question);

@@ -3,7 +3,6 @@ import { Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
 import history from '../history';
 import { connect } from 'react-redux';
 import { postQuestion } from '../redux/actions/index';
-import { bindActionCreators } from 'redux';
 
 class NewQuestion extends Component {
   state = {
@@ -76,18 +75,14 @@ class NewQuestion extends Component {
     );
   }
 }
-const mapStateToProps = state => {
+function mapStateToProps ({selectedUser, newQuestionResponse}) {
   return {
-    selectedUser: state.selectedUser,
-    newQuestionResponse: state.newQuestionResponse
+    selectedUser,
+    newQuestionResponse
   };
-};
-
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ postQuestion }, dispatch);
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {postQuestion}
 )(NewQuestion);
