@@ -1,35 +1,47 @@
 import React, { Component } from 'react';
 import { Button, Col, Row } from 'reactstrap';
-import { NavTab } from 'react-router-tabs';
 import history from '../history';
 import { connect } from 'react-redux';
-import { selectedUser } from '../redux/actions/index';
-
-require('react-router-tabs/styles/react-router-tabs.css');
+import { getSelectedUser } from '../redux/actions/index';
+import { NavLink } from 'react-router-dom';
 
 class Navigation extends Component {
+  state = {
+    user: null
+  }
+  
+  componentWillReceiveProps () {
+    const user = sessionStorage.getItem('user');
+    this.setState({ user })
+  }
 
   logoutHandler = () => {
-    this.props.selectedUser('');
-    sessionStorage.removeItem('auth');
+    this.props.getSelectedUser('');
+    sessionStorage.clear();
     history.push(`/login`);
   };
-  
 
   render() {
-    const { currentUser } = this.props;
+    const { user } = this.state;
+
     return (
       <Row className="navigation mt-4 mb-4">
         <Col className="text-left" lg={{ size: 3 }} />
         <Col className="nav-tab-grpup text-center" lg={{ size: 6 }}>
-          <NavTab to="/questions">Questions</NavTab>
-          <NavTab to="/newQuestion">NewQuestion</NavTab>
-          <NavTab to="/leaderboard">Leaderboard</NavTab>
+          <NavLink className="toggle" to="/questions">
+            Questions
+          </NavLink>
+          <NavLink className="toggle" to="/newQuestion">
+            NewQuestion
+          </NavLink>
+          <NavLink className="toggle" to="/leaderboard">
+            Leaderboard
+          </NavLink>
         </Col>
         <Col className="text-right" lg={{ size: 3 }}>
-          {sessionStorage.getItem('auth') === 'vJeHm0n5L3osynxL3DWWC6SjIYZ0DU2w' && (
+          { user !== null && (
             <span>
-              Hello {currentUser}
+              Hello {user}
               <Button
                 style={{ marginLeft: '10px' }}
                 color="danger"
@@ -44,11 +56,11 @@ class Navigation extends Component {
   }
 }
 
-function mapStateToProps ({currentUser}) {
-  return { currentUser };
-};
+function mapStateToProps({ selectedUser }) {
+  return { selectedUser };
+}
 
 export default connect(
   mapStateToProps,
-  {selectedUser}
+  { getSelectedUser }
 )(Navigation);

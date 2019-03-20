@@ -48,10 +48,10 @@ export const postQuestion = question => {
 
 //======================== selectedUsers =============================
 
-export function selectedUser(selectedUser) {
+export function getSelectedUser(currentUser) {
   return {
     type: GET_CURRENT_USER,
-    payload: selectedUser
+    currentUser
   };
 }
 

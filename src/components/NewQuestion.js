@@ -7,9 +7,10 @@ import { postQuestion } from '../redux/actions/index';
 class NewQuestion extends Component {
   state = {
     activeTab: '1',
-    optionTwoText: '',
     optionOneText: '',
-    question: null
+    optionTwoText: '',
+    question: null,
+    isDisabled : true
   };
 
   toggle = tab => {
@@ -21,12 +22,16 @@ class NewQuestion extends Component {
   };
 
   questionHandler = event => {
+    const { optionOneText, optionTwoText } = this.state;
     const name = event.target.name;
     const value = event.target.value;
+
     if (name === 'optionOneText') {
       this.setState({ optionOneText: value });
-    } else {
+      if ( value !== '' && optionTwoText !== '') { this.setState({ isDisabled:false })}
+    } else if (name === 'optionTwoText') {
       this.setState({ optionTwoText: value });
+      if ( value !== '' && optionOneText !== '') { this.setState({ isDisabled:false })}
     }
   };
 
@@ -46,7 +51,7 @@ class NewQuestion extends Component {
   };
 
   render() {
-    const { optionTwoText, optionOneText } = this.state;
+    const { optionTwoText, optionOneText, isDisabled } = this.state;
     return (
       <Row>
         <Col sm="12" md={{ size: 6, offset: 3 }}>
@@ -68,7 +73,7 @@ class NewQuestion extends Component {
               name="optionTwoText"
               onChange={this.questionHandler}
             />
-            <Button onClick={this.questionSubmit}>Submit</Button>
+            <Button disabled={ isDisabled } onClick={this.questionSubmit}>Submit</Button>
           </Card>
         </Col>
       </Row>

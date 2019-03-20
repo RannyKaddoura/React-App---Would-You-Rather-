@@ -5,7 +5,7 @@ const INITIAL_STATE = '';
 export default function selectedUser(state = INITIAL_STATE, action) {
     switch (action.type) {
       case GET_CURRENT_USER:
-        return action.payload;
+        return action.currentUser;
       default:
         return state;
     }

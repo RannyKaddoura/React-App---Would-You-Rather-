@@ -12,25 +12,20 @@ import Error404 from './Error404';
 import PrivateRouter from './PrivateRouter';
 
 export default class MainRouter extends Component {
-  state = {
-    loading: false
-  };
 
-  render() {
-    const { loading } = this.state;
+  render() { 
 
     return (
-      <Col>
-        <Navigation logout={this.logout} />
+      <Col> 
+          <Route path='/' component={Navigation} />
         <Switch>
           <PrivateRouter exact path="/newQuestion" component={NewQuestion} />
-          <PrivateRouter exact path="/" component={Questions} />
           <PrivateRouter path="/questions" component={Questions} />
           <PrivateRouter path="/question/:questionId" component={Question} />
           <PrivateRouter path="/leaderboard" component={Leaderboard} />
           <PrivateRouter path="/results/:questionId" component={Results} />
-          <Route path="/login" render={() => <Login loading={loading} />} />
-          <Route component={Error404} />
+          <Route path="/login" component={Login} />
+          <PrivateRouter component={Error404} />
         </Switch>
       </Col>
     );
