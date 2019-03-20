@@ -1,30 +1,20 @@
 import React, { Component } from 'react';
 import { Col } from 'reactstrap';
 import { Route, Switch } from 'react-router-dom';
-import history from '../history';
 import Navigation from './Navigation';
 import Login from './Login';
-import Main from './Main';
 import Questions from './Questions';
 import NewQuestion from './NewQuestion';
 import Leaderboard from './Leaderboard';
 import Question from './Question';
 import Welcome from './Welcome';
 import Results from './Results';
+import Error404 from './Error404';
+import PrivateRouter from './PrivateRouter';
 
 export default class MainRouter extends Component {
   state = {
-    user: null,
-    userName: null,
     loading: false
-  };
-
-  logout = () => {
-    this.setState({ loading: true });
-    setTimeout(function() {
-      this.setState({ user: null, loading: false });
-      history.push(`/login`);
-    }, 100);
   };
 
   render() {
@@ -34,18 +24,15 @@ export default class MainRouter extends Component {
       <Col>
         <Navigation logout={this.logout} />
         <Switch>
-          <Route exact path="/" render={() => <Main />} />
-          <Route
-            exact
-            path="/login"
-            render={() => <Login loading={loading} />}
-          />
-          <Route path="/user/:selectedUser" component={Welcome} />
-          <Route path="/questions" component={Questions} />
-          <Route path="/newQuestion" component={NewQuestion} />
-          <Route path="/question/:questionId" component={Question} />
-          <Route path="/leaderboard" component={Leaderboard} />
-          <Route path="/results/:questionId" component={Results} />
+          <PrivateRouter exact path="/" component={Questions} />
+          <Route path="/login" render={() => <Login loading={loading} />} />
+          <PrivateRouter path="/user/:selectedUser" component={Welcome} />
+          <PrivateRouter path="/questions" component={Questions} />
+          <PrivateRouter exact path="/newQuestion" component={NewQuestion} />
+          <PrivateRouter path="/question/:questionId" component={Question} />
+          <PrivateRouter path="/leaderboard" component={Leaderboard} />
+          <PrivateRouter path="/results/:questionId" component={Results} />
+          <Route path="/404" component={Error404} />
         </Switch>
       </Col>
     );
