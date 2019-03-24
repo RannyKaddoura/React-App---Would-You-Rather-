@@ -35,7 +35,7 @@ export default class UnAnswered extends Component {
                   <p>
                     <Link
                       className="question-link"
-                      to={`/question/${question.id}`}>
+                      to={`/results/${question.id}`}>
                       View poll
                     </Link>
                   </p>

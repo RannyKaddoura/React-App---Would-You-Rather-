@@ -14,17 +14,17 @@ import PrivateRouter from './PrivateRouter';
 export default class MainRouter extends Component {
 
   render() { 
-
+    
     return (
       <Col> 
-          <Route path='/' component={Navigation} />
+          <Navigation />
         <Switch>
-          <PrivateRouter exact path="/newQuestion" component={NewQuestion} />
-          <PrivateRouter path="/questions" component={Questions} />
+          <PrivateRouter path="/leaderboard"          component={Leaderboard} />
+          <PrivateRouter path="/newQuestion"    component={NewQuestion} />
           <PrivateRouter path="/question/:questionId" component={Question} />
-          <PrivateRouter path="/leaderboard" component={Leaderboard} />
-          <PrivateRouter path="/results/:questionId" component={Results} />
-          <Route path="/login" component={Login} />
+          <PrivateRouter path="/questions"            component={Questions} />
+          <PrivateRouter path="/results/:questionId"  component={Results} />
+          <Route path="/login"      component={Login} />
           <PrivateRouter component={Error404} />
         </Switch>
       </Col>

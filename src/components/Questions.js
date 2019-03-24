@@ -3,7 +3,6 @@ import { TabContent, TabPane, Nav, NavItem, NavLink, Col } from 'reactstrap';
 import classnames from 'classnames';
 import UnAnswered from './UnAnswered';
 import Answered from './Answered';
-import history from '../history';
 import { connect } from 'react-redux';
 import { fetchQuestions, fetchUsers } from '../redux/actions/index';
 
@@ -11,10 +10,13 @@ class Questions extends Component {
   state = {
     activeTab: '1',
     answeredArray: [],
-    unAnsweredArray: []
+    unAnsweredArray: [],
+    currentUser: null
   };
 
   componentDidMount() {
+    const currentUser = sessionStorage.getItem("user");
+    this.setState({ currentUser })
     this.props.fetchUsers();
     this.props.fetchQuestions();
   }
@@ -33,38 +35,40 @@ class Questions extends Component {
   };
 
   componentWillReceiveProps() {
-    const { allUsers, allQuestions, selectedUser } = this.props;
+    const { allUsers, allQuestions } = this.props;
+    const { currentUser } = this.state;
 
-    if (selectedUser === '') {
-      history.push('/login');
-    } else {
-      const userAnsweredObject = allUsers
-        .filter(user => user.id === selectedUser)
-        .map(user => {
-          return user.answers;
-        });
-      if (userAnsweredObject !== undefined && userAnsweredObject !== null) {
-        const userAnsweredArray = Object.keys(userAnsweredObject[0]);
+    const userAnsweredObject = allUsers
+      .filter(user => user.id === currentUser)
+      .map(user => {
+        return user.answers;
+      });
 
-        const answeredArray = [];
-        const unAnsweredArray = [];
+    if (
+        userAnsweredObject.length > 0 &&
+        userAnsweredObject !== undefined &&
+        userAnsweredObject !== null
+    ) {
+      const userAnsweredArray = Object.keys(userAnsweredObject[0]);
 
-        allQuestions.map(Q => {
-          if (userAnsweredArray.indexOf(Q.id) !== -1) {
-            unAnsweredArray.push(Q);
-          } else {
-            answeredArray.push(Q);
-          }
-          return null;
-        });
-        this.setState({ answeredArray, unAnsweredArray });
-      }
+      const answeredArray = [];
+      const unAnsweredArray = [];
+
+      allQuestions.map(Q => {
+        if (userAnsweredArray.indexOf(Q.id) !== -1) {
+          unAnsweredArray.push(Q);
+        } else {
+          answeredArray.push(Q);
+        }
+        return null;
+      });
+      this.setState({ answeredArray, unAnsweredArray });
     }
   }
 
   render() {
-    const { allUsers, selectedUser } = this.props;
-    const { unAnsweredArray, answeredArray } = this.state;
+    const { allUsers } = this.props;
+    const { unAnsweredArray, answeredArray, currentUser } = this.state;
 
     return (
       <Col className="questions" lg={{ size: 6, offset: 3 }}>
@@ -92,14 +96,14 @@ class Questions extends Component {
           <TabPane tabId="1">
             <Answered
               answeredArray={answeredArray}
-              selectedUser={selectedUser}
+              selectedUser={currentUser}
               allUsers={allUsers}
             />
           </TabPane>
           <TabPane tabId="2">
             <UnAnswered
               unAnsweredArray={unAnsweredArray}
-              selectedUser={selectedUser}
+              selectedUser={currentUser}
               allUsers={allUsers}
             />
           </TabPane>
@@ -109,13 +113,13 @@ class Questions extends Component {
   }
 }
 
-function mapStateToProps({allQuestions, allUsers, selectedUser }) {
+function mapStateToProps({ allQuestions, allUsers, selectedUser }) {
   return {
     allQuestions,
     allUsers,
     selectedUser
   };
-};
+}
 
 export default connect(
   mapStateToProps,

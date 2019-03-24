@@ -6,24 +6,16 @@ import { getSelectedUser } from '../redux/actions/index';
 import { NavLink } from 'react-router-dom';
 
 class Navigation extends Component {
-  state = {
-    user: null
-  }
-  
-  componentWillReceiveProps () {
-    const user = sessionStorage.getItem('user');
-    this.setState({ user })
-  }
-
+   
   logoutHandler = () => {
     this.props.getSelectedUser('');
     sessionStorage.clear();
     history.push(`/login`);
   };
 
-  render() {
-    const { user } = this.state;
-
+  render() { 
+    const user = sessionStorage.getItem('user');
+    
     return (
       <Row className="navigation mt-4 mb-4">
         <Col className="text-left" lg={{ size: 3 }} />
@@ -39,7 +31,7 @@ class Navigation extends Component {
           </NavLink>
         </Col>
         <Col className="text-right" lg={{ size: 3 }}>
-          { user !== null && (
+           {user !== null && (
             <span>
               Hello {user}
               <Button
@@ -49,7 +41,7 @@ class Navigation extends Component {
                 Logout
               </Button>
             </span>
-          )}
+           )}
         </Col>
       </Row>
     );
