@@ -10,9 +10,14 @@ class NewQuestion extends Component {
     optionOneText: '',
     optionTwoText: '',
     question: null,
-    isDisabled : true
+    currentUser: null,
+    isDisabled: true
   };
 
+  componentDidMount() {
+    const currentUser = sessionStorage.getItem('user');
+    this.setState({ currentUser });
+  }
   toggle = tab => {
     if (this.state.activeTab !== tab) {
       this.setState({
@@ -28,24 +33,27 @@ class NewQuestion extends Component {
 
     if (name === 'optionOneText') {
       this.setState({ optionOneText: value });
-      if ( value !== '' && optionTwoText !== '') { this.setState({ isDisabled:false })}
+      if (value !== '' && optionTwoText !== '') {
+        this.setState({ isDisabled: false });
+      }
     } else if (name === 'optionTwoText') {
       this.setState({ optionTwoText: value });
-      if ( value !== '' && optionOneText !== '') { this.setState({ isDisabled:false })}
+      if (value !== '' && optionOneText !== '') {
+        this.setState({ isDisabled: false });
+      }
     }
   };
 
   questionSubmit = () => {
-    const { optionTwoText, optionOneText } = this.state;
-    const { selectedUser } = this.props;
+    const { optionTwoText, optionOneText, currentUser } = this.state;
     const question = {
       optionOneText,
       optionTwoText,
-      author: selectedUser
+      author: currentUser
     };
     this.setState({ question });
     this.props.postQuestion(question).then(function(res) {
-      console.log("postQuestion",res);
+      console.log('postQuestion', res);
       history.push(`/questions`);
     }, 1000);
   };
@@ -58,7 +66,7 @@ class NewQuestion extends Component {
           <Card className="new-question" body>
             <CardTitle>Create New Question</CardTitle>
             <CardText>
-                <strong>Would you rather ...</strong>
+              <strong>Would you rather ...</strong>
             </CardText>
             <input
               value={optionOneText}
@@ -73,21 +81,22 @@ class NewQuestion extends Component {
               name="optionTwoText"
               onChange={this.questionHandler}
             />
-            <Button disabled={ isDisabled } onClick={this.questionSubmit}>Submit</Button>
+            <Button disabled={isDisabled} onClick={this.questionSubmit}>
+              Submit
+            </Button>
           </Card>
         </Col>
       </Row>
     );
   }
 }
-function mapStateToProps ({selectedUser, newQuestionResponse}) {
+function mapStateToProps({ newQuestionResponse }) {
   return {
-    selectedUser,
     newQuestionResponse
   };
-};
+}
 
 export default connect(
   mapStateToProps,
-  {postQuestion}
+  { postQuestion }
 )(NewQuestion);
