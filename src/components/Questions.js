@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink, Col } from 'reactstrap';
 import classnames from 'classnames';
-import UnAnswered from './UnAnswered';
+import { UnAnswered } from './UnAnswered';
 import Answered from './Answered';
 import { connect } from 'react-redux';
 import { fetchQuestions, fetchUsers } from '../redux/actions/index';
